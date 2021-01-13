@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order>
+	<test>Y</test>
+	<delivered>true</delivered>
+	<orderId>1</orderId>
+	<orderItems>
+		<orderItem>
+			<orderItemId>1</orderItemId>
+			<orderItemQty>1</orderItemQty>
+			<orderItemPublishName>ABC Company</orderItemPublishName>
+			<orderItemPrice>10.59</orderItemPrice>
+		</orderItem>
+	</orderItems>
+</order>

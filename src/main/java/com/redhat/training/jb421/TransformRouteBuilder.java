@@ -8,7 +8,7 @@ public class TransformRouteBuilder extends RouteBuilder {
 	@SuppressWarnings("deprecation")
 	private static XmlJsonDataFormat xmlJsonDf = new XmlJsonDataFormat();
 	
-	private static final String SRCURI = "file://C://Users//01696020//codeready-workspace//TransformAndWireTap//orders//incoming?";
+	private static final String SRCURI = "";
 	private static final String SRCPARAM = "include=order.*xml";
 	
 	@Override

@@ -12,10 +12,15 @@
     <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
         <property name="configuration" ref="jmsConfig"/>
     </bean> -->
+    <!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://lxeblub001:3306/ebilluat" />
+        <property name="username" value="ebill" />
+        <property name="password" value="a1b2C3d4e5f6!!" />
+    </bean> -->
     <bean class="com.redhat.training.jb421.TransformRouteBuilder" id="transformRouteBuilder"/>
-    <bean class="com.redhat.training.jb421.OrderJSONTypeConverter" id="orderJSONTypeConverter"/>
+    <!-- <bean class="com.redhat.training.jb421.OrderJSONTypeConverter" id="orderJSONTypeConverter"/> -->
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="transformRouteBuilder"/>
-        
     </camelContext>
 </beans>

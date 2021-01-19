@@ -1,8 +1,16 @@
-# Spring-Boot Camel QuickStart
+Access Database Using Spring-Boot Camel
 
-This example demonstrates how you can use Apache Camel with Spring Boot.
+This example demonstrates how you can use Apache Camel to access Database with Spring Boot.
 
-The quickstart uses Spring Boot to configure a little application that includes a Camel route that triggers a message every 5th second, and routes the message to a log.
+### Configuration
+The database configuration can be configured under application.properties with the following properties:
+
+	spring.datasource.driver-class-name
+	spring.jpa.hibernate.ddl-auto
+	spring.datasource.url
+	spring.datasource.username
+	spring.datasource.password
+
 
 ### Building
 

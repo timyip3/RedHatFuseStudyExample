@@ -21,5 +21,29 @@ public class Order implements Serializable {
 	 private BigDecimal discount;  
 	 @DataField(pos=4)  
 	 private Boolean delivered=false;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+	public Boolean getDelivered() {
+		return delivered;
+	}
+	public void setDelivered(Boolean delivered) {
+		this.delivered = delivered;
+	}
 
 }

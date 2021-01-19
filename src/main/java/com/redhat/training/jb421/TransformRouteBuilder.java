@@ -9,7 +9,7 @@ public class TransformRouteBuilder extends RouteBuilder {
 
 	private static BindyCsvDataFormat csvDF = new BindyCsvDataFormat(Order.class);
 	
-	private static final String SRCURI = "";
+	private static final String SRCURI = "file:orders/incoming?";
 	private static final String SRCPARAM = "include=order.*csv";
 	
 	@Override
@@ -20,12 +20,17 @@ public class TransformRouteBuilder extends RouteBuilder {
 		.to("direct:orderLog");
 		
 		from("direct:orderLog")
-			.log("Order received before split: ${body}")
 			.split(body())
-			.log("order after split: ${body}")
-		.to("mock:orderLoggingSystem");
+		.to("direct:updateDB");
 		
+		from("direct:updateDB")
+		.to("sql: select * from test_data")
+		.to("direct:DBResult");
 		
+		from("direct:DBResult")
+			.split(body())
+			.log("DBResult: ${body}")
+		.to("mock:DBResultEnd");
 	}
 
 }

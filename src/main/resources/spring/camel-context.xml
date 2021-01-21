@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring.xsd">
     
-    <bean id="errHandlingRouteBuilder"
-    	class="com.redhat.training.jb421.ErrorHandlingRouteBuilder"/>
+    <bean class="com.redhat.training.jb421.ErrorHandlingRouteBuilder" id="errHandlingRouteBuilder"/>
+    <bean class="com.redhat.training.jb421.ApprovalPredicate" id="approvalPredicate"/>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="errHandlingRouteBuilder"/>
     </camelContext>

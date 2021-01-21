@@ -13,10 +13,12 @@ public class ErrorHandlingRouteBuilder extends RouteBuilder {
 		from("file:orders/incoming")
 			.routeId("process")
 			.choice()
-				.when(xpath("/order/customer/shippingAddress/state/text() = 'AK'"))
-					.to("file:orders/output/AK")
-				.when(xpath("/order/customer/shippingAddress/state/text() = 'MA'"))
-					.to("file:orders/output/MA")
+				.when(method("approvalPredicate", "isFromOrlyCompany"))
+					.to("file:orders/output/Orly")
+				.when(method("approvalPredicate", "isLessThan100"))
+					.to("file:orders/output/Less100")
+				.when(method("approvalPredicate", "isGreaterThan100"))
+					.to("file:orders/output/Greater100")
 				.otherwise()
 		.to("direct:auditing");
 		

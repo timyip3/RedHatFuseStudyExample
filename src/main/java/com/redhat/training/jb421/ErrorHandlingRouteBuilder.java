@@ -1,6 +1,8 @@
 package com.redhat.training.jb421;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.rest.RestBindingMode;
 
 public class ErrorHandlingRouteBuilder extends RouteBuilder {
 
@@ -10,26 +12,35 @@ public class ErrorHandlingRouteBuilder extends RouteBuilder {
 				deadLetterChannel("file:orders/problems")
 				.disableRedelivery());
 		
-		from("file:orders/incoming")
-			.routeId("process")
-			.choice()
-				.when(method("approvalPredicate", "isFromOrlyCompany"))
-					.to("file:orders/output/Orly")
-				.when(method("approvalPredicate", "isLessThan100"))
-					.to("file:orders/output/Less100")
-				.when(method("approvalPredicate", "isGreaterThan100"))
-					.to("file:orders/output/Greater100")
-				.otherwise()
-		.to("direct:auditing");
+		onException(NumberFormatException.class)
+			.handled(true)
+			.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
+			.setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
+			.setBody().constant("Data error finding shipping address with ID!");
 		
-		from("direct:auditing")
-			.routeId("auditing")
-			.doTry()
-				.process(new ValueHeaderProcessor())
-				.to("file:orders/root/dest")
-			.doCatch(NumberFormatException.class)
-				.to("file:orders/trash")
-			.endDoTry();
+		restConfiguration()
+			.component("spark-rest")
+			.port(8082);
+		
+		rest("/orders")
+			.get("/shipAddress/{id}")
+				.to("direct:shipAddress")
+			.get("/orderTotal/{id}")
+				.to("direct:orderTotal")
+			.get("/itemList/{id}")
+				.to("direct:itemList");
+			
+		from("direct:shipAddress")
+			.log("shipAddress")
+		.to("mock:shipAddressMock");
+		
+		from("direct:orderTotal")
+			.log("orderTotal")
+		.to("mock:orderTotalMock");
+		
+		from("direct:itemList")
+			.log("itemList")
+		.to("mock:itemListMock");
 	}
 
 }
